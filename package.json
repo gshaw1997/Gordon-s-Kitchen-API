@@ -6,23 +6,18 @@
   "scripts": {
     "start": "npm run gulp-tsc",
     "build": "node_modules/.bin/gulp tsc",
-    "test": "npm run build && node_modules/.bin/jest",
-    "test:coverage": "npm run build && node_modules/.bin/jest --coverage",
-    "gulp-tsc": "node_modules/.bin/gulp start",
-    "pack": "npm run build && cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
-    "zip": "cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
-    "deploy": "eb deploy LearningObject-Service-Production --profile clark --label Learning-Object-Service-v$(node -p \"require('./package.json').version\")"
+    "gulp-tsc": "node_modules/.bin/gulp start"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Cyber4All/learning-object-service.git"
+    "url": "git+https://github.com/gshaw1997/Gordons-Kitchen-API"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Cyber4All/learning-object-service/issues"
+    "url": "https://github.com/gshaw1997/Gordons-Kitchen-API/issues"
   },
-  "homepage": "https://github.com/Cyber4All/learning-object-service#readme",
+  "homepage": "https://github.com/gshaw1997/Gordons-Kitchen-API#readme",
   "dependencies": {
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
@@ -33,6 +28,7 @@
     "source-map-support": "^0.5.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.3",
     "@types/dotenv": "^4.0.2",
     "@types/express": "^4.0.39",
     "@types/mongodb": "^2.2.13",

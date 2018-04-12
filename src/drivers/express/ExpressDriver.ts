@@ -18,9 +18,6 @@ export class ExpressDriver {
 
     this.app.use(cors({ origin: true, credentials: true }));
 
-    // Set Validation Middleware
-    this.app.use(enforceTokenAccess);
-
     // Set our api routes
     this.app.use('/', ExpressRouteDriver.buildRouter(dataStore));
 
