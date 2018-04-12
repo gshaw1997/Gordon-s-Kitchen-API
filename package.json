@@ -9,12 +9,9 @@
     "test": "npm run build && node_modules/.bin/jest",
     "test:coverage": "npm run build && node_modules/.bin/jest --coverage",
     "gulp-tsc": "node_modules/.bin/gulp start",
-    "pack":
-      "npm run build && cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
-    "zip":
-      "cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
-    "deploy":
-      "eb deploy LearningObject-Service-Production --profile clark --label Learning-Object-Service-v$(node -p \"require('./package.json').version\")"
+    "pack": "npm run build && cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
+    "zip": "cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
+    "deploy": "eb deploy LearningObject-Service-Production --profile clark --label Learning-Object-Service-v$(node -p \"require('./package.json').version\")"
   },
   "repository": {
     "type": "git",
@@ -32,7 +29,7 @@
     "morgan": "^1.9.0",
     "request": "^2.85.0",
     "rxjs": "^5.5.8",
-    "source-map-support": "^0.5.0",
+    "source-map-support": "^0.5.0"
   },
   "devDependencies": {
     "@types/dotenv": "^4.0.2",
