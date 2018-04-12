@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Cyber4All/learning-object-service#readme",
   "dependencies": {
+    "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "morgan": "^1.9.0",
