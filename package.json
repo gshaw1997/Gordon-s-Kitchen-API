@@ -1,0 +1,51 @@
+{
+  "name": "gordons-kitchen-api",
+  "version": "1.0.0",
+  "description": "Gordon's Kitchen API",
+  "main": "app.ts",
+  "scripts": {
+    "start": "npm run gulp-tsc",
+    "build": "node_modules/.bin/gulp tsc",
+    "test": "npm run build && node_modules/.bin/jest",
+    "test:coverage": "npm run build && node_modules/.bin/jest --coverage",
+    "gulp-tsc": "node_modules/.bin/gulp start",
+    "pack":
+      "npm run build && cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
+    "zip":
+      "cp ./package.json ./dist && cp -r ./.ebextensions ./dist && cd ./dist && zip -r ../dist.zip  ./* & cd ..",
+    "deploy":
+      "eb deploy LearningObject-Service-Production --profile clark --label Learning-Object-Service-v$(node -p \"require('./package.json').version\")"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cyber4All/learning-object-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cyber4All/learning-object-service/issues"
+  },
+  "homepage": "https://github.com/Cyber4All/learning-object-service#readme",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "request": "^2.85.0",
+    "rxjs": "^5.5.8",
+    "source-map-support": "^0.5.0",
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.2",
+    "@types/express": "^4.0.39",
+    "@types/mongodb": "^2.2.13",
+    "@types/morgan": "^1.7.35",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-typescript": "^3.1.7",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}
