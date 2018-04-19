@@ -13,7 +13,7 @@ export class ExpressDriver {
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
 
-    //Setup route logger
+    // Setup route logger
     this.app.use(logger('dev'));
 
     this.app.use(cors({ origin: true, credentials: true }));

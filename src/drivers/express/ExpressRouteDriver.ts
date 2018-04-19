@@ -2,11 +2,12 @@ import { ExpressResponder } from '../drivers';
 import { DataStore, Responder } from '../../interfaces/interfaces';
 import { Router, Response } from 'express';
 import { ObjectInteractor } from '../../interactors/interactors';
+import { UserInteractor } from '../../interactors/UserInteractor';
 // This refers to the package.json that is generated in the dist. See /gulpfile.js for reference.
+// tslint:disable-next-line:no-require-imports
 const version = require('../../package.json').version;
 
 export class ExpressRouteDriver {
-
   constructor(private dataStore: DataStore) {}
 
   public static buildRouter(dataStore: DataStore): Router {
@@ -24,8 +25,21 @@ export class ExpressRouteDriver {
     router.get('/', async (req, res) => {
       res.json({
         version,
-        message: `Welcome to the Gordon's Kitchen API v${version}`
+        message: `Welcome to the Gordon's Kitchen API v${version}`,
       });
+    });
+
+    router.get('/user/:id', async (req, res) => {
+      try {
+        const id = req.params.id;
+        await UserInteractor.fetchUser(
+          this.dataStore,
+          this.getResponder(res),
+          id,
+        );
+      } catch (e) {
+        console.log(e);
+      }
     });
   }
 }
