@@ -17,7 +17,6 @@ CREATE TABLE `gordons_kitchen`.`friends` (
   `player_id` INT NOT NULL,
   `user_id` INT NOT NULL);
 
-
 CREATE TABLE `gordons_kitchen`.`player_level` (
   `xp` INT NOT NULL,
   `level_num` INT NOT NULL,
@@ -73,3 +72,13 @@ CREATE TABLE `gordons_kitchen`.`reaction` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
+CREATE TABLE `gordons_kitchen`.`completed` (
+  `user_id` INT NOT NULL,
+  `dish_id` INT NOT NULL,
+  `score_id` INT NOT NULL);
+
+CREATE TABLE `gordons_kitchen`.`scores` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `score` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
