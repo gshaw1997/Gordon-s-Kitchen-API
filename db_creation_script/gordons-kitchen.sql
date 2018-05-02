@@ -82,3 +82,5 @@ CREATE TABLE `gordons_kitchen`.`scores` (
   `score` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
+--   USER ROLES ?
