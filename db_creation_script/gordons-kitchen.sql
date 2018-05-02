@@ -13,6 +13,11 @@ CREATE TABLE `gordons_kitchen`.`account_history` (
   `last_signed_on` DATETIME NOT NULL,
   PRIMARY KEY (`user_id`));
 
+CREATE TABLE `gordons_kitchen`.`friends` (
+  `player_id` INT NOT NULL,
+  `user_id` INT NOT NULL);
+
+
 CREATE TABLE `gordons_kitchen`.`player_level` (
   `xp` INT NOT NULL,
   `level_num` INT NOT NULL,
