@@ -7,6 +7,11 @@ CREATE TABLE `gordons_kitchen`.`users` (
   `total_xp` INT NULL,
   PRIMARY KEY (`id`)), UNIQUE INDEX `id_UNIQUE` (`id` ASC);
 
+  CREATE TABLE `gordons_kitchen`.`users_roles` (
+  `user_id` INT NOT NULL,
+  `role` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`user_id`));
+  
 CREATE TABLE `gordons_kitchen`.`account_history` (
   `user_id` INT NOT NULL,
   `created_on` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -83,4 +88,9 @@ CREATE TABLE `gordons_kitchen`.`scores` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
---   USER ROLES ?
+  CREATE TABLE `gordons_kitchen`.`credits` (
+  `id` INT NOT NULL,
+  `text` TEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
