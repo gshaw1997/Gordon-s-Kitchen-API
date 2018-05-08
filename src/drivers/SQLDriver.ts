@@ -253,6 +253,35 @@ export class SQLDriver implements DataStore {
     }
   }
   /**
+   * Updates last sign on time
+   *
+   * @param {string} id
+   * @returns {Promise<void>}
+   * @memberof SQLDriver
+   */
+  public async updateLastSignOn(id: string): Promise<void> {
+    try {
+      const signOnTime = Date.now().toString();
+      await new Promise<any>((resolve, reject) => {
+        this.db.query(
+          `UPDATE ${TABLES.ACCOUNT_HISTORY} SET ${
+            TABLES.ACCOUNT_HISTORY
+          }.last_signed_on=${signOnTime} WHERE ${
+            TABLES.ACCOUNT_HISTORY
+          }.user_id=${id}`,
+          async (e, results, fields) => {
+            if (e) {
+              reject(e);
+            }
+            resolve(results);
+          },
+        );
+      });
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+  /**
    * Fetches User's Completion history
    *
    * @private

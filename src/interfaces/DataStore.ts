@@ -7,6 +7,7 @@ export interface DataStore {
   findUser(username: string): Promise<string>;
   fetchUsers(username?: string): Promise<User[]>;
   fetchUser(id: string): Promise<User>;
+  updateLastSignOn(id: string): Promise<void>;
   fecthFriends(userID: string): Promise<User[]>;
   fetchDishes(): Promise<Dish[]>;
   fetchDish(id: string): Promise<Dish>;

@@ -58,6 +58,7 @@ export class AuthInteractor {
       if (!passwordMatch) {
         return Promise.reject('Password is incorrect');
       }
+      await dataStore.updateLastSignOn(user.id);
       delete user.password;
       return user;
     } catch (e) {
