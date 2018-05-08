@@ -30,11 +30,13 @@
     "source-map-support": "^0.5.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^2.0.0",
     "@types/cors": "^2.8.3",
     "@types/dotenv": "^4.0.2",
     "@types/express": "^4.0.39",
     "@types/mongodb": "^2.2.13",
     "@types/morgan": "^1.7.35",
+    "@types/mysql": "^2.15.4",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-typescript": "^3.1.7",
