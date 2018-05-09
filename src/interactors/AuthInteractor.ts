@@ -21,6 +21,10 @@ export class AuthInteractor {
     password: string,
   ) {
     try {
+      const exists = await dataStore.findUser(username);
+      if (exists) {
+        return Promise.reject('Username is already in use');
+      }
       password = await bcrypt.hash(password, SALT_ROUNDS);
       const user = await dataStore.addUser(username, password);
     } catch (e) {
