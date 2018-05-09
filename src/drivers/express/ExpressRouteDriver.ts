@@ -36,7 +36,7 @@ export class ExpressRouteDriver {
       try {
         const username = req.body.username;
         const password = req.body.password;
-        const user = AuthInteractor.register(
+        const user = await AuthInteractor.register(
           this.dataStore,
           username,
           password,
@@ -52,7 +52,11 @@ export class ExpressRouteDriver {
       try {
         const username = req.body.username;
         const password = req.body.password;
-        const user = AuthInteractor.login(this.dataStore, username, password);
+        const user = await AuthInteractor.login(
+          this.dataStore,
+          username,
+          password,
+        );
         responder.sendObject(user);
       } catch (e) {
         responder.sendOperationError(e);
@@ -65,7 +69,7 @@ export class ExpressRouteDriver {
         const userID = req.body.userID;
         const dishID = req.body.dishID;
         const score = +req.body.score;
-        const user = UserInteractor.insertCompletion(
+        const user = await UserInteractor.insertCompletion(
           this.dataStore,
           userID,
           dishID,

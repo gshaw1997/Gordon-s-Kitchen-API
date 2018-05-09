@@ -54,7 +54,9 @@ export class AuthInteractor {
       } catch (e) {
         return Promise.reject('Invalid username');
       }
-
+      if (!id) {
+        return Promise.reject('Invalid username');
+      }
       const user = await dataStore.fetchUser(id);
 
       const passwordMatch = await bcrypt.compare(password, user.password);

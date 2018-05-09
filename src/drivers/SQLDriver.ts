@@ -27,7 +27,7 @@ export const TABLES = {
   FRIENDS: 'friends',
   IMAGES: 'images',
   OPTIONS: 'options',
-  PLAYER_LEVEL: 'player-level',
+  PLAYER_LEVEL: 'player_level',
   PROMPTS: 'prompts',
   REACTIONS: 'reactions',
   SCORES: 'scores',
@@ -92,14 +92,14 @@ export class SQLDriver implements DataStore {
         this.db.query(
           `INSERT INTO ${
             TABLES.USERS
-          } (username, password, total_xp) VALUES (${username}, ${password}, ${START_XP});
+          } (username, password, total_xp) VALUES ('${username}', '${password}', ${START_XP});
         INSERT INTO ${
           TABLES.ACCOUNT_HISTORY
-        } (user_id, created_on, last_signed_on) VALUES (LAST_INSERT_ID(), ${createdDate}, ${createdDate});
+        } (user_id, created_on, last_signed_on) VALUES (LAST_INSERT_ID(), '${createdDate}', '${createdDate}');
         INSERT INTO ${
           TABLES.USER_ROLES
-        } (user_id, role) VALUES (LAST_INSERT_ID(), ${UserRoles.Player});`,
-          async (e, results, fields) => {
+        } (user_id, role) VALUES (LAST_INSERT_ID(), '${UserRoles.Player}');`,
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
@@ -126,16 +126,23 @@ export class SQLDriver implements DataStore {
         this.db.query(
           `SELECT ${TABLES.USERS}.id FROM ${
             TABLES.USERS
-          } WHERE username=${username}`,
-          async (e, results, fields) => {
+          } WHERE username='${username}'`,
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results[0]);
+            if (results) {
+              resolve(results[0]);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
-      return row.id;
+      if (row) {
+        return row.id;
+      }
+      return row;
     } catch (e) {
       return Promise.reject(e);
     }
@@ -162,12 +169,15 @@ export class SQLDriver implements DataStore {
               ? 'AND ' + TABLES.USERS + '.username LIKE ' + '%' + username + '%'
               : ''
           }`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            console.log(results);
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -201,12 +211,15 @@ export class SQLDriver implements DataStore {
           }.role FROM ${TABLES.USERS} INNER JOIN ${TABLES.USER_ROLES} ON ${
             TABLES.USERS
           }.id=${TABLES.USER_ROLES}.user_id AND ${TABLES.USERS}.id=${id}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            console.log(results[0]);
-            resolve(results[0]);
+            if (results) {
+              resolve(results[0]);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -233,11 +246,15 @@ export class SQLDriver implements DataStore {
           }.last_signed_on FROM ${TABLES.ACCOUNT_HISTORY} WHERE ${
             TABLES.ACCOUNT_HISTORY
           }.user_id=${userid}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results[0]);
+            if (results) {
+              resolve(results[0]);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -269,11 +286,15 @@ export class SQLDriver implements DataStore {
           }.last_signed_on=${signOnTime} WHERE ${
             TABLES.ACCOUNT_HISTORY
           }.user_id=${id}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -298,11 +319,15 @@ export class SQLDriver implements DataStore {
           }.score_id FROM ${TABLES.COMPLETED} WHERE ${
             TABLES.COMPLETED
           }.user_id=${userid}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -337,11 +362,15 @@ export class SQLDriver implements DataStore {
           `SELECT ${TABLES.SCORES}.score FROM ${TABLES.SCORES} WHERE ${
             TABLES.SCORES
           }.id=${scoreID}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results[0]);
+            if (results) {
+              resolve(results[0]);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -365,14 +394,20 @@ export class SQLDriver implements DataStore {
         this.db.query(
           `SELECT ${TABLES.PLAYER_LEVEL}.level_num, ${
             TABLES.PLAYER_LEVEL
-          }.level_name, ${TABLES.PLAYER_LEVEL}.description WHERE ${
+          }.level_name, ${TABLES.PLAYER_LEVEL}.description FROM ${
             TABLES.PLAYER_LEVEL
-          }.xp <= ${xp} ORDER BY ${TABLES.PLAYER_LEVEL}.xp DESC`,
-          async (e, results, fields) => {
+          } WHERE ${TABLES.PLAYER_LEVEL}.xp <= ${xp} ORDER BY ${
+            TABLES.PLAYER_LEVEL
+          }.xp DESC`,
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results[0]);
+            if (results) {
+              resolve(results[0]);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -400,11 +435,15 @@ export class SQLDriver implements DataStore {
           `SELECT ${TABLES.FRIENDS}.player_id WHERE ${
             TABLES.FRIENDS
           }.user_id= ${userID}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -429,11 +468,15 @@ export class SQLDriver implements DataStore {
       const rows = await new Promise<any[]>((resolve, reject) => {
         this.db.query(
           `SELECT * FROM ${TABLES.DISHES}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -463,11 +506,15 @@ export class SQLDriver implements DataStore {
           }.difficulty, ${TABLES.DISHES}.unlocked_at FROM ${
             TABLES.DISHES
           } WHERE ${TABLES.DISHES}.id =${id}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -494,11 +541,15 @@ export class SQLDriver implements DataStore {
           }.is_correct, ${TABLES.STEPS}.option_id FROM ${TABLES.STEPS} WHERE ${
             TABLES.STEPS
           }.dish_id=${dishID}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -553,11 +604,15 @@ export class SQLDriver implements DataStore {
           }.description FROM ${TABLES.OPTIONS} WHERE ${
             TABLES.OPTIONS
           }.id=${optionID}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results[0]);
+            if (results) {
+              resolve(results[0]);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -591,11 +646,15 @@ export class SQLDriver implements DataStore {
           }.reward FROM ${TABLES.XP_REWARDS} WHERE ${
             TABLES.XP_REWARDS
           }.dish_id=${dishID}`,
-          async (e, results, fields) => {
+          (e, results, fields) => {
             if (e) {
               reject(e);
             }
-            resolve(results);
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No record found');
+            }
           },
         );
       });
@@ -659,6 +718,7 @@ export class SQLDriver implements DataStore {
         completed: await this.fetchCompleted(row.id),
         role: row.role,
       };
+      return user;
     } catch (e) {
       return Promise.reject(e);
     }
