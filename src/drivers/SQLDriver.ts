@@ -469,7 +469,6 @@ export class SQLDriver implements DataStore {
       if (difficulty) {
         query += ` WHERE ${TABLES.DISHES}.difficulty='${difficulty}'`;
       }
-      console.log(query);
       const rows = await new Promise<any[]>((resolve, reject) => {
         this.db.query(query, (e, results, fields) => {
           if (e) {
@@ -603,9 +602,11 @@ export class SQLDriver implements DataStore {
         this.db.query(
           `SELECT ${TABLES.OPTIONS}.id,${TABLES.OPTIONS}.type, ${
             TABLES.OPTIONS
-          }.description FROM ${TABLES.OPTIONS} WHERE ${
+          }.description, ${TABLES.IMAGES}.url AS image FROM ${
             TABLES.OPTIONS
-          }.id=${optionID}`,
+          } LEFT JOIN ${TABLES.IMAGES} ON ${TABLES.OPTIONS}.image_id=${
+            TABLES.IMAGES
+          }.id WHERE ${TABLES.OPTIONS}.id=${optionID}`,
           (e, results, fields) => {
             if (e) {
               reject(e);
