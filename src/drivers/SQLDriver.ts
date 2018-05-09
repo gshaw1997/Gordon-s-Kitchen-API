@@ -463,27 +463,29 @@ export class SQLDriver implements DataStore {
    * @returns {Promise<Dish[]>}
    * @memberof SQLDriver
    */
-  public async fetchDishes(): Promise<Dish[]> {
+  public async fetchDishes(difficulty?: string): Promise<Dish[]> {
     try {
+      let query = `SELECT * FROM ${TABLES.DISHES}`;
+      if (difficulty) {
+        query += ` WHERE ${TABLES.DISHES}.difficulty='${difficulty}'`;
+      }
+      console.log(query);
       const rows = await new Promise<any[]>((resolve, reject) => {
-        this.db.query(
-          `SELECT * FROM ${TABLES.DISHES}`,
-          (e, results, fields) => {
-            if (e) {
-              reject(e);
-            }
-            if (results) {
-              resolve(results);
-            } else {
-              reject('No record found');
-            }
-          },
-        );
+        this.db.query(query, (e, results, fields) => {
+          if (e) {
+            reject(e);
+          }
+          if (results) {
+            resolve(results);
+          } else {
+            reject('No record found');
+          }
+        });
       });
       const dishes: Dish[] = [];
       for (const row of rows) {
         const dish = await this.generateDish(row);
-        dishes.push(row);
+        dishes.push(dish);
       }
       return dishes;
     } catch (e) {

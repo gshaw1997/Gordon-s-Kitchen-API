@@ -9,7 +9,7 @@ export interface DataStore {
   fetchUser(id: string): Promise<User>;
   updateLastSignOn(id: string): Promise<void>;
   fecthFriends(userID: string): Promise<User[]>;
-  fetchDishes(): Promise<Dish[]>;
+  fetchDishes(difficulty?: string): Promise<Dish[]>;
   fetchDish(id: string): Promise<Dish>;
   addCompletion(userID: string, dishID: string, score: number): Promise<void>;
 }

@@ -124,6 +124,19 @@ export class ExpressRouteDriver {
         responder.sendOperationError(e);
       }
     });
+    router.get('/dishes/difficulty/:difficulty', async (req, res) => {
+      const responder = this.getResponder(res);
+      try {
+        const difficulty = req.params.difficulty;
+        const dishes = await DishInteractor.fetchDishes(
+          this.dataStore,
+          difficulty,
+        );
+        responder.sendObject(dishes);
+      } catch (e) {
+        responder.sendOperationError(e);
+      }
+    });
     router.get('/dishes/:id', async (req, res) => {
       const responder = this.getResponder(res);
       try {

@@ -10,9 +10,12 @@ export class DishInteractor {
    * @returns {Promise<Dish[]>}
    * @memberof DishInteractor
    */
-  public static async fetchDishes(dataStore: DataStore): Promise<Dish[]> {
+  public static async fetchDishes(
+    dataStore: DataStore,
+    difficulty?: string,
+  ): Promise<Dish[]> {
     try {
-      const dishes = await dataStore.fetchDishes();
+      const dishes = await dataStore.fetchDishes(difficulty);
       return dishes;
     } catch (e) {
       return Promise.reject(`Problem fetching dishes. Error: ${e}`);
