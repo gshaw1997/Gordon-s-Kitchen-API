@@ -63,12 +63,13 @@ export class ExpressRouteDriver {
       }
     });
 
-    router.post('/users/completed', async (req, res) => {
+    router.post('/users/:id/completed', async (req, res) => {
       const responder = this.getResponder(res);
       try {
-        const userID = req.body.userID;
+        const userID = req.params.id;
         const dishID = req.body.dishID;
         const score = +req.body.score;
+
         const user = await UserInteractor.insertCompletion(
           this.dataStore,
           userID,

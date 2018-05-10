@@ -134,7 +134,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results[0]);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -176,7 +176,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -218,7 +218,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results[0]);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -253,7 +253,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results[0]);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -293,7 +293,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -326,7 +326,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -369,7 +369,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results[0]);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -406,7 +406,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results[0]);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -442,7 +442,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -477,7 +477,7 @@ export class SQLDriver implements DataStore {
           if (results) {
             resolve(results);
           } else {
-            reject('No record found');
+            reject('No result from query');
           }
         });
       });
@@ -514,7 +514,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -549,7 +549,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -614,7 +614,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results[0]);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -656,7 +656,7 @@ export class SQLDriver implements DataStore {
             if (results) {
               resolve(results);
             } else {
-              reject('No record found');
+              reject('No result from query');
             }
           },
         );
@@ -691,10 +691,25 @@ export class SQLDriver implements DataStore {
   ): Promise<void> {
     try {
       await new Promise<any>((resolve, reject) => {
-        this.db.query(`INSERT INTO ${TABLES.SCORES} (score) VALUES (${score});
+        this.db.query(
+          `INSERT INTO ${TABLES.SCORES} (score) VALUES (${score});
         INSERT INTO ${
           TABLES.COMPLETED
-        } (user_id, dish_id, score_id) VALUES (${userID}, ${dishID}, LAST_INSERT_ID())`);
+        } (user_id, dish_id, score_id) VALUES (${userID}, ${dishID}, LAST_INSERT_ID()); 
+        UPDATE ${TABLES.USERS} SET ${TABLES.USERS}.total_xp=${
+            TABLES.USERS
+          }.total_xp + ${score} WHERE ${TABLES.USERS}.id=${userID};`,
+          (e, results, fields) => {
+            if (e) {
+              reject(e);
+            }
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No result from query');
+            }
+          },
+        );
       });
     } catch (e) {
       return Promise.reject(e);
