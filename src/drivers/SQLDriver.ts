@@ -411,10 +411,38 @@ export class SQLDriver implements DataStore {
           },
         );
       });
+
+      const row2 = await new Promise<any>((resolve, reject) => {
+        this.db.query(
+          `SELECT ${TABLES.PLAYER_LEVEL}.xp, ${
+            TABLES.PLAYER_LEVEL
+          }.level_num, ${TABLES.PLAYER_LEVEL}.level_name, ${
+            TABLES.PLAYER_LEVEL
+          }.description FROM ${TABLES.PLAYER_LEVEL} WHERE ${
+            TABLES.PLAYER_LEVEL
+          }.level_num = ${+row.level_num} + 1`,
+          (e, results, fields) => {
+            if (e) {
+              reject(e);
+            }
+            if (results) {
+              resolve(results[0]);
+            } else {
+              reject('No result from query');
+            }
+          },
+        );
+      });
       const level: PlayerLevel = {
         name: row.level_name,
         number: +row.level_num,
         description: row.description,
+        nextLevel: {
+          name: row2.level_name,
+          number: +row2.level_num,
+          description: row2.description,
+          xpNeeded: +row2.xp,
+        },
       };
       return level;
     } catch (e) {
@@ -432,9 +460,9 @@ export class SQLDriver implements DataStore {
     try {
       const rows = await new Promise<any[]>((resolve, reject) => {
         this.db.query(
-          `SELECT ${TABLES.FRIENDS}.player_id WHERE ${
+          `SELECT ${TABLES.FRIENDS}.player_id FROM ${TABLES.FRIENDS} WHERE ${
             TABLES.FRIENDS
-          }.user_id= ${userID}`,
+          }.user_id=${userID}`,
           (e, results, fields) => {
             if (e) {
               reject(e);
@@ -453,6 +481,8 @@ export class SQLDriver implements DataStore {
         const friend = await this.fetchUser(row.player_id);
         friends.push(friend);
       }
+
+      return friends;
     } catch (e) {
       return Promise.reject(e);
     }

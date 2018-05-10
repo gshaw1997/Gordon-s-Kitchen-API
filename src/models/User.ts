@@ -14,6 +14,8 @@ export type PlayerLevel = {
   name: string;
   number: number;
   description: string;
+  xpNeeded?: number;
+  nextLevel?: PlayerLevel;
 };
 
 export type AccountHistory = {
