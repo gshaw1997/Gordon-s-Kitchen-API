@@ -167,7 +167,6 @@ export class SQLDriver implements DataStore {
       if (username) {
         query += ` AND ${TABLES.USERS}.username LIKE '%${username}%'`;
       }
-      console.log('QUERY: ', query);
       const rows = await new Promise<any[]>((resolve, reject) => {
         this.db.query(query, (e, results, fields) => {
           if (e) {
@@ -483,6 +482,72 @@ export class SQLDriver implements DataStore {
         friends.push(friend);
       }
 
+      return friends;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+  /**
+   * Adds Friend to user
+   *
+   * @param {string} userID
+   * @param {string} playerID
+   * @returns {Promise<User[]>}
+   * @memberof SQLDriver
+   */
+  public async addFriend(userID: string, playerID: string): Promise<User[]> {
+    try {
+      await new Promise<any>((resolve, reject) => {
+        this.db.query(
+          `INSERT INTO ${
+            TABLES.FRIENDS
+          } (user_id, player_id) VALUES (${userID}, ${playerID})`,
+          (e, results, fields) => {
+            if (e) {
+              reject(e);
+            }
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No result from query');
+            }
+          },
+        );
+      });
+      const friends = await this.fecthFriends(userID);
+      return friends;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+  /**
+   * Removes Friend from User
+   *
+   * @param {string} userID
+   * @param {string} playerID
+   * @returns {Promise<User[]>}
+   * @memberof SQLDriver
+   */
+  public async removeFriend(userID: string, playerID: string): Promise<User[]> {
+    try {
+      await new Promise<any>((resolve, reject) => {
+        this.db.query(
+          `DELETE FROM ${TABLES.FRIENDS} WHERE ${
+            TABLES.FRIENDS
+          }.user_id=${userID} AND ${TABLES.FRIENDS}.player_id=${playerID}`,
+          (e, results, fields) => {
+            if (e) {
+              reject(e);
+            }
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No result from query');
+            }
+          },
+        );
+      });
+      const friends = await this.fecthFriends(userID);
       return friends;
     } catch (e) {
       return Promise.reject(e);

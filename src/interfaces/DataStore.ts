@@ -9,6 +9,8 @@ export interface DataStore {
   fetchUser(id: string): Promise<User>;
   updateLastSignOn(id: string): Promise<void>;
   fecthFriends(userID: string): Promise<User[]>;
+  addFriend(userID: string, playerID: string): Promise<User[]>;
+  removeFriend(userID: string, playerID: string): Promise<User[]>;
   fetchDishes(difficulty?: string): Promise<Dish[]>;
   fetchDish(id: string): Promise<Dish>;
   addCompletion(userID: string, dishID: string, score: number): Promise<void>;

@@ -73,6 +73,56 @@ export class UserInteractor {
   }
 
   /**
+   * Add User's Friend
+   *
+   * @static
+   * @param {DataStore} dataStore
+   * @param {string} id
+   * @returns {Promise<User[]>}
+   * @memberof UserInteractor
+   */
+  public static async addFriend(
+    dataStore: DataStore,
+    id: string,
+    playerID: string,
+  ): Promise<User[]> {
+    try {
+      const friends = await dataStore.addFriend(id, playerID);
+      for (const user of friends) {
+        delete user.password;
+      }
+      return friends;
+    } catch (e) {
+      return Promise.reject(`Problem adding friend. Error ${e}`);
+    }
+  }
+
+  /**
+   * Removes User's Friend
+   *
+   * @static
+   * @param {DataStore} dataStore
+   * @param {string} id
+   * @returns {Promise<User[]>}
+   * @memberof UserInteractor
+   */
+  public static async removeFriend(
+    dataStore: DataStore,
+    id: string,
+    playerID: string,
+  ): Promise<User[]> {
+    try {
+      const friends = await dataStore.removeFriend(id, playerID);
+      for (const user of friends) {
+        delete user.password;
+      }
+      return friends;
+    } catch (e) {
+      return Promise.reject(`Problem removing friend. Error ${e}`);
+    }
+  }
+
+  /**
    * Inserts completion
    *
    * @static

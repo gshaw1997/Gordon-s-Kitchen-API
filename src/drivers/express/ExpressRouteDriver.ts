@@ -104,11 +104,46 @@ export class ExpressRouteDriver {
       }
     });
 
-    router.get('/users/:id/friends', async (req, res) => {
+    router
+      .route('/users/:id/friends')
+      .get(async (req, res) => {
+        const responder = this.getResponder(res);
+        try {
+          const id = req.params.id;
+          const friends = await UserInteractor.fetchFriends(this.dataStore, id);
+          responder.sendObject(friends);
+        } catch (e) {
+          responder.sendOperationError(e);
+        }
+      })
+      .post(async (req, res) => {
+        const responder = this.getResponder(res);
+        try {
+          const userID = req.params.id;
+          const playerID = req.body.playerID;
+
+          const friends = await UserInteractor.addFriend(
+            this.dataStore,
+            userID,
+            playerID,
+          );
+          responder.sendObject(friends);
+        } catch (e) {
+          responder.sendOperationError(e);
+        }
+      });
+
+    router.delete('/users/:id/friends/:playerID', async (req, res) => {
       const responder = this.getResponder(res);
       try {
-        const id = req.params.id;
-        const friends = await UserInteractor.fetchFriends(this.dataStore, id);
+        const userID = req.params.id;
+        const playerID = req.params.playerID;
+
+        const friends = await UserInteractor.removeFriend(
+          this.dataStore,
+          userID,
+          playerID,
+        );
         responder.sendObject(friends);
       } catch (e) {
         responder.sendOperationError(e);
