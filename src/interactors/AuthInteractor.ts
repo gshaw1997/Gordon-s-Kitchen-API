@@ -27,6 +27,8 @@ export class AuthInteractor {
       }
       password = await bcrypt.hash(password, SALT_ROUNDS);
       const user = await dataStore.addUser(username, password);
+      delete user.password;
+      return user;
     } catch (e) {
       return Promise.reject(`Problem registering. Error: ${e}`);
     }

@@ -437,12 +437,14 @@ export class SQLDriver implements DataStore {
         name: row.level_name,
         number: +row.level_num,
         description: row.description,
-        nextLevel: {
-          name: row2.level_name,
-          number: +row2.level_num,
-          description: row2.description,
-          xpNeeded: +row2.xp,
-        },
+        nextLevel: row2
+          ? {
+              name: row2.level_name,
+              number: +row2.level_num,
+              description: row2.description,
+              xpNeeded: +row2.xp,
+            }
+          : undefined,
       };
       return level;
     } catch (e) {

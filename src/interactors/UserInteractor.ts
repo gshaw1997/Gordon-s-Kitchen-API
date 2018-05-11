@@ -91,7 +91,8 @@ export class UserInteractor {
   ): Promise<User> {
     try {
       await dataStore.addCompletion(userID, dishID, score);
-      const user = dataStore.fetchUser(userID);
+      const user = await dataStore.fetchUser(userID);
+      delete user.password;
       return user;
     } catch (e) {
       return Promise.reject(`Problem inserting completion. Error: ${e}`);
