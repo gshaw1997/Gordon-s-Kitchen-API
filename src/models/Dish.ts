@@ -5,6 +5,8 @@ export type Dish = {
   unlockedAt: string;
   steps: RecipeStep[];
   rewards: XPReward[];
+  reactions: Reactions;
+  prompts: Prompts;
 };
 
 export type RecipeStep = {
@@ -23,6 +25,27 @@ export type RecipeOption = {
 export type XPReward = {
   penalties: number;
   reward: number;
+};
+
+export type Reactions = {
+  positive: Reaction[];
+  negative: Reaction[];
+};
+
+export type Prompts = {
+  intro: Prompt[];
+  failure: Prompt[];
+  success: Prompt[];
+};
+
+export type Reaction = {
+  text: string;
+};
+
+export type Prompt = {
+  order: number;
+  text: string;
+  image?: string;
 };
 
 export enum RecipeOptionType {

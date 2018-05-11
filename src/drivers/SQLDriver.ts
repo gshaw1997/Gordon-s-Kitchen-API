@@ -8,7 +8,15 @@ import { User, Dish } from '../models/models';
 dotenv.config();
 
 import * as mysql from 'mysql';
-import { RecipeStep, XPReward, RecipeOption } from '../models/Dish';
+import {
+  RecipeStep,
+  XPReward,
+  RecipeOption,
+  Reactions,
+  Reaction,
+  Prompts,
+  Prompt,
+} from '../models/Dish';
 import {
   AccountHistory,
   Completed,
@@ -728,6 +736,107 @@ export class SQLDriver implements DataStore {
       return Promise.reject(e);
     }
   }
+
+  /**
+   * Fetches Reactions associated with Dish
+   *
+   * @private
+   * @param {string} dishID
+   * @returns {Promise<Reactions>}
+   * @memberof SQLDriver
+   */
+  private async fetchReactions(dishID: string): Promise<Reactions> {
+    try {
+      const rows = await new Promise<any[]>((resolve, reject) => {
+        this.db.query(
+          `SELECT ${TABLES.REACTIONS}.text, ${TABLES.REACTIONS}.positive FROM ${
+            TABLES.REACTIONS
+          } WHERE ${TABLES.REACTIONS}.dish_id=${dishID}`,
+          (e, results, fields) => {
+            if (e) {
+              reject(e);
+            }
+            if (results) {
+              resolve(results);
+            } else {
+              reject('No result from query');
+            }
+          },
+        );
+      });
+
+      const reactions: Reactions = {
+        positive: [],
+        negative: [],
+      };
+
+      for (const row of rows) {
+        const reaction: Reaction = {
+          text: row.text,
+        };
+        row.positive
+          ? reactions.positive.push(reaction)
+          : reactions.negative.push(reaction);
+      }
+      return reactions;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+
+  /**
+   * Fetches Prompts associated with Dish
+   *
+   * @private
+   * @param {string} dishID
+   * @returns {Promise<Prompts>}
+   * @memberof SQLDriver
+   */
+  private async fetchPrompts(dishID: string): Promise<Prompts> {
+    try {
+      const query = `SELECT ${TABLES.PROMPTS}.order_num, ${
+        TABLES.PROMPTS
+      }.type, ${TABLES.PROMPTS}.text, ${TABLES.IMAGES}.url as image FROM ${
+        TABLES.PROMPTS
+      } LEFT JOIN ${TABLES.IMAGES} ON ${TABLES.PROMPTS}.image_id=${
+        TABLES.IMAGES
+      }.id WHERE ${TABLES.PROMPTS}.dish_id=${dishID}`;
+
+      const rows = await new Promise<any[]>((resolve, reject) => {
+        this.db.query(query, (e, results, fields) => {
+          if (e) {
+            reject(e);
+          }
+          if (results) {
+            resolve(results);
+          } else {
+            reject('No result from query');
+          }
+        });
+      });
+
+      const prompts: Prompts = {
+        intro: [],
+        failure: [],
+        success: [],
+      };
+
+      for (const row of rows) {
+        const prompt: Prompt = {
+          order: row.order_num,
+          text: row.text,
+          image: row.image,
+        };
+
+        prompts[row.type].push(prompt);
+      }
+
+      return prompts;
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  }
+
   /**
    * Fetches reward associated with Dish
    *
@@ -858,10 +967,14 @@ export class SQLDriver implements DataStore {
       unlockedAt: dishRow.unlocked_at,
       steps: [],
       rewards: [],
+      reactions: null,
+      prompts: null,
     };
     if (full) {
       dish.steps = await this.fetchRecipeSteps(dish.id);
       dish.rewards = await this.fetchRewards(dish.id);
+      dish.reactions = await this.fetchReactions(dish.id);
+      dish.prompts = await this.fetchPrompts(dish.id);
     }
     return dish;
   }
