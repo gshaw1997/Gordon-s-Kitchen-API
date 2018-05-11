@@ -156,30 +156,29 @@ export class SQLDriver implements DataStore {
    */
   public async fetchUsers(username?: string): Promise<User[]> {
     try {
+      let query = `SELECT ${TABLES.USERS}.id, ${TABLES.USERS}.username, ${
+        TABLES.USERS
+      }.password, ${TABLES.USERS}.total_xp, ${TABLES.USER_ROLES}.role FROM ${
+        TABLES.USERS
+      } INNER JOIN ${TABLES.USER_ROLES} ON ${TABLES.USERS}.id=${
+        TABLES.USER_ROLES
+      }.user_id`;
+
+      if (username) {
+        query += ` AND ${TABLES.USERS}.username LIKE '%${username}%'`;
+      }
+      console.log('QUERY: ', query);
       const rows = await new Promise<any[]>((resolve, reject) => {
-        this.db.query(
-          `SELECT ${TABLES.USERS}.id, ${TABLES.USERS}.username, ${
-            TABLES.USERS
-          }.password, ${TABLES.USERS}.total_xp, ${
-            TABLES.USER_ROLES
-          }.role FROM ${TABLES.USERS} INNER JOIN ${TABLES.USER_ROLES} ON ${
-            TABLES.USERS
-          }.id=${TABLES.USER_ROLES}.user_id ${
-            username
-              ? 'AND ' + TABLES.USERS + '.username LIKE ' + '%' + username + '%'
-              : ''
-          }`,
-          (e, results, fields) => {
-            if (e) {
-              reject(e);
-            }
-            if (results) {
-              resolve(results);
-            } else {
-              reject('No result from query');
-            }
-          },
-        );
+        this.db.query(query, (e, results, fields) => {
+          if (e) {
+            reject(e);
+          }
+          if (results) {
+            resolve(results);
+          } else {
+            reject('No result from query');
+          }
+        });
       });
 
       const users: User[] = [];
