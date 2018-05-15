@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 15, 2018 at 10:16 AM
+-- Generation Time: May 15, 2018 at 01:07 PM
 -- Server version: 5.7.22
 -- PHP Version: 7.2.3-1ubuntu1
 
@@ -52,7 +52,7 @@ INSERT INTO `account_history` (`
 user_id`,
 `created_on
 `, `last_signed_on`) VALUES
-(3, '1525887327774', '1526142848789'),
+(3, '1525887327774', '1526395410886'),
 (4, '1526019919968', '1526019991775'),
 (5, '1526020127780', '1526020127780'),
 (6, '1526020231872', '1526027905359'),
@@ -113,7 +113,8 @@ id`,
 (33, 3, 2, 36),
 (34, 3, 2, 37),
 (35, 3, 2, 38),
-(36, 8, 2, 39);
+(36, 8, 2, 39),
+(37, 3, 2, 40);
 
 -- --------------------------------------------------------
 
@@ -464,7 +465,8 @@ INSERT INTO `scores` (`id`, `score`) VALUES
 (36, 1000),
 (37, 400),
 (38, 1000),
-(39, 800);
+(39, 800),
+(40, 1000);
 
 -- --------------------------------------------------------
 
@@ -554,7 +556,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `total_xp`) VALUES
-(3, 'gshaw', '$2b$10$So43TnPip9AxaBrxKk9LB.ETN5jtV41Q8Sweq6WXh/OkAMrTjWe1O', 11600),
+(3, 'gshaw', '$2b$10$So43TnPip9AxaBrxKk9LB.ETN5jtV41Q8Sweq6WXh/OkAMrTjWe1O', 12600),
 (4, 'bossChef22', '$2b$10$rTJ60FaUWNxl7bfmOmnOROPf30YS2UOA/VYXEW9SsILNwH3yipQwO', 0),
 (5, 'test', '$2b$10$47dwqD5QV2imlQabrgSEFO7IznrGyVgDwL8P8mM91gMBKU5E21ZrW', 0),
 (6, 'gordonRamsay', '$2b$10$tgnCj6PBUpg9sHNA.qQ3S.ahYWLtm0ca/Hq/UtV19MMLTZUeUO3CO', 12000),
@@ -732,7 +734,7 @@ ALTER TABLE `xp_reward`
 -- AUTO_INCREMENT for table `completed`
 --
 ALTER TABLE `completed`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `dishes`
 --
@@ -762,7 +764,7 @@ ALTER TABLE `reactions`
 -- AUTO_INCREMENT for table `scores`
 --
 ALTER TABLE `scores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `steps`
 --

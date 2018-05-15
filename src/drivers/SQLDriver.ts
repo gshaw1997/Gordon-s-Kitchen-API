@@ -7,7 +7,7 @@ import * as dotenv from 'dotenv';
 import { User, Dish } from '../models/models';
 dotenv.config();
 
-import * as mysql from 'mysql';
+import * as mysql from 'mysql2';
 import {
   RecipeStep,
   XPReward,
@@ -55,6 +55,7 @@ export class SQLDriver implements DataStore {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       multipleStatements: true,
+      ssl: true,
     };
     this.connect(config);
   }
