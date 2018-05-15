@@ -20,11 +20,13 @@
   "homepage": "https://github.com/gshaw1997/Gordons-Kitchen-API#readme",
   "dependencies": {
     "@types/mysql": "^2.15.4",
+    "bcrypt": "^2.0.1",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
     "request": "^2.85.0",
     "rxjs": "^5.5.8",
     "source-map-support": "^0.5.0"
@@ -43,6 +45,7 @@
     "tslint": "^5.8.0",
     "typescript": "^2.5.3"
   },
+  "image": "heroku/nodejs",
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all"
