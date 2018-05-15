@@ -1,0 +1,51 @@
+{
+  "name": "gordons-kitchen-api",
+  "version": "1.0.0",
+  "description": "Gordon's Kitchen API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gshaw1997/Gordons-Kitchen-API"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gshaw1997/Gordons-Kitchen-API/issues"
+  },
+  "homepage": "https://github.com/gshaw1997/Gordons-Kitchen-API#readme",
+  "dependencies": {
+    "@types/mysql": "^2.15.4",
+    "bcrypt": "^2.0.1",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "mysql2": "^1.5.3",
+    "request": "^2.85.0",
+    "rxjs": "^5.5.8",
+    "source-map-support": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^2.0.0",
+    "@types/cors": "^2.8.3",
+    "@types/dotenv": "^4.0.2",
+    "@types/express": "^4.0.39",
+    "@types/mongodb": "^2.2.13",
+    "@types/morgan": "^1.7.35",
+    "@types/mysql": "^2.15.4",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-typescript": "^3.1.7",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  },
+  "image": "heroku/nodejs",
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
+}
