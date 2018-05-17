@@ -3,14 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 15, 2018 at 01:07 PM
+-- Generation Time: May 17, 2018 at 04:31 PM
 -- Server version: 5.7.22
 -- PHP Version: 7.2.3-1ubuntu1
 
-SET SQL_MODE
-= "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone
-= "+00:00";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,10 +19,7 @@ SET time_zone
 --
 -- Database: `gordons_kitchen`
 --
-CREATE DATABASE
-IF NOT EXISTS `gordons_kitchen` DEFAULT CHARACTER
-SET utf8
-COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `gordons_kitchen` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `gordons_kitchen`;
 
 -- --------------------------------------------------------
@@ -33,25 +28,17 @@ USE `gordons_kitchen`;
 -- Table structure for table `account_history`
 --
 
-DROP TABLE IF EXISTS `account_history`;
-CREATE TABLE `account_history`
-(
-  `user_id` int
-(11) NOT NULL,
-  `created_on` varchar
-(255) NOT NULL,
-  `last_signed_on` varchar
-(255) NOT NULL
+CREATE TABLE `account_history` (
+  `user_id` int(11) NOT NULL,
+  `created_on` varchar(255) NOT NULL,
+  `last_signed_on` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `account_history`
 --
 
-INSERT INTO `account_history` (`
-user_id`,
-`created_on
-`, `last_signed_on`) VALUES
+INSERT INTO `account_history` (`user_id`, `created_on`, `last_signed_on`) VALUES
 (3, '1525887327774', '1526395410886'),
 (4, '1526019919968', '1526019991775'),
 (5, '1526020127780', '1526020127780'),
@@ -65,27 +52,18 @@ user_id`,
 -- Table structure for table `completed`
 --
 
-DROP TABLE IF EXISTS `completed`;
-CREATE TABLE `completed`
-(
-  `id` int
-(11) NOT NULL,
-  `user_id` int
-(11) NOT NULL,
-  `dish_id` int
-(11) NOT NULL,
-  `score_id` int
-(11) NOT NULL
+CREATE TABLE `completed` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `dish_id` int(11) NOT NULL,
+  `score_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `completed`
 --
 
-INSERT INTO `completed` (`
-id`,
-`user_id
-`, `dish_id`, `score_id`) VALUES
+INSERT INTO `completed` (`id`, `user_id`, `dish_id`, `score_id`) VALUES
 (9, 3, 2, 12),
 (10, 3, 2, 13),
 (11, 3, 3, 14),
@@ -122,11 +100,8 @@ id`,
 -- Table structure for table `credits`
 --
 
-DROP TABLE IF EXISTS `credits`;
-CREATE TABLE `credits`
-(
-  `id` int
-(11) NOT NULL,
+CREATE TABLE `credits` (
+  `id` int(11) NOT NULL,
   `text` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -136,27 +111,18 @@ CREATE TABLE `credits`
 -- Table structure for table `dishes`
 --
 
-DROP TABLE IF EXISTS `dishes`;
-CREATE TABLE `dishes`
-(
-  `id` int
-(11) NOT NULL,
-  `name` varchar
-(45) NOT NULL,
-  `difficulty` varchar
-(45) NOT NULL,
-  `unlocked_at` int
-(11) NOT NULL
+CREATE TABLE `dishes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `difficulty` varchar(45) NOT NULL,
+  `unlocked_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `dishes`
 --
 
-INSERT INTO `dishes` (`
-id`,
-`name
-`, `difficulty`, `unlocked_at`) VALUES
+INSERT INTO `dishes` (`id`, `name`, `difficulty`, `unlocked_at`) VALUES
 (1, 'greek pizza', 'easy', 3),
 (2, 'pb & j', 'easy', 0),
 (3, 'grilled cheese', 'easy', 1),
@@ -168,23 +134,16 @@ id`,
 -- Table structure for table `friends`
 --
 
-DROP TABLE IF EXISTS `friends`;
-CREATE TABLE `friends`
-(
-  `player_id` int
-(11) NOT NULL,
-  `user_id` int
-(11) NOT NULL
+CREATE TABLE `friends` (
+  `player_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `friends`
 --
 
-INSERT INTO `friends` (`
-player_id`,
-`user_id
-`) VALUES
+INSERT INTO `friends` (`player_id`, `user_id`) VALUES
 (3, 6),
 (3, 7),
 (6, 3),
@@ -197,25 +156,17 @@ player_id`,
 -- Table structure for table `images`
 --
 
-DROP TABLE IF EXISTS `images`;
-CREATE TABLE `images`
-(
-  `id` int
-(11) NOT NULL,
-  `url` varchar
-(255) NOT NULL,
-  `description` varchar
-(255) DEFAULT NULL
+CREATE TABLE `images` (
+  `id` int(11) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `images`
 --
 
-INSERT INTO `images` (`
-id`,
-`url
-`, `description`) VALUES
+INSERT INTO `images` (`id`, `url`, `description`) VALUES
 (1, 'https://i.imgur.com/3gdJV4K.png', 'banana'),
 (2, 'https://i.imgur.com/4iUb456.png', 'toast'),
 (3, 'https://i.imgur.com/pKlIhcV.png', 'hot sauce'),
@@ -262,27 +213,18 @@ id`,
 -- Table structure for table `options`
 --
 
-DROP TABLE IF EXISTS `options`;
-CREATE TABLE `options`
-(
-  `id` int
-(11) NOT NULL,
-  `type` varchar
-(45) NOT NULL,
-  `description` varchar
-(255) DEFAULT NULL,
-  `image_id` int
-(11) DEFAULT NULL
+CREATE TABLE `options` (
+  `id` int(11) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `options`
 --
 
-INSERT INTO `options` (`
-id`,
-`type
-`, `description`, `image_id`) VALUES
+INSERT INTO `options` (`id`, `type`, `description`, `image_id`) VALUES
 (1, 'ingredient', 'dough', 8),
 (2, 'ingredient', 'toast', 2),
 (3, 'ingredient', 'bread', 2),
@@ -319,27 +261,18 @@ id`,
 -- Table structure for table `player_level`
 --
 
-DROP TABLE IF EXISTS `player_level`;
-CREATE TABLE `player_level`
-(
-  `xp` int
-(11) NOT NULL,
-  `level_num` int
-(11) NOT NULL,
-  `level_name` varchar
-(45) NOT NULL,
-  `description` varchar
-(45) NOT NULL
+CREATE TABLE `player_level` (
+  `xp` int(11) NOT NULL,
+  `level_num` int(11) NOT NULL,
+  `level_name` varchar(45) NOT NULL,
+  `description` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `player_level`
 --
 
-INSERT INTO `player_level` (`
-xp`,
-`level_num
-`, `level_name`, `description`) VALUES
+INSERT INTO `player_level` (`xp`, `level_num`, `level_name`, `description`) VALUES
 (0, 0, 'Noobie', 'You\'re a noob'),
 (1000, 1, 'Competent', 'You\'re Competent'),
 (2000, 2, 'Able', 'You\'re able to be in the kitchen'),
@@ -358,7 +291,6 @@ xp`,
 -- Table structure for table `prompts`
 --
 
-DROP TABLE IF EXISTS `prompts`;
 CREATE TABLE `prompts` (
   `id` int(11) NOT NULL,
   `dish_id` int(11) NOT NULL,
@@ -378,7 +310,15 @@ INSERT INTO `prompts` (`id`, `dish_id`, `order_num`, `type`, `text`, `image_id`)
 (3, 2, 1, 'failure', 'Your dish is done. Gordon smiles.', 37),
 (4, 2, 2, 'failure', '\"You\'ve got a great future in my industry . . . as my customer.\"', NULL),
 (5, 2, 1, 'success', 'Many hours later, your dish is completed.', NULL),
-(6, 2, 2, 'success', '\"Delicious. FINALLY, some good food.\"', NULL);
+(6, 2, 2, 'success', '\"Delicious. FINALLY, some good food.\"', NULL),
+(7, 3, 1, 'intro', 'You can handle the basics I see.', 38),
+(8, 3, 1, 'intro', '\"Let\'s see if you can master the art of grilled cheese.\"', NULL),
+(9, 3, 1, 'failure', 'Your bread is burnt to a crisp.', 39),
+(10, 3, 2, 'failure', '\"Oh no, this sandwich is too cheesy for me\"', NULL),
+(11, 3, 1, 'success', 'It\'s a golden perfection.. Marvelous. ', 21),
+(12, 3, 2, 'success', '\"Dude... Your sandwich is looking sharp today.\"', NULL),
+(13, 3, 1, 'intro', 'Om Nom Nom Nom... Breakfast is essential to start the day offf right.', 36),
+(14, 3, 2, 'intro', '\"Morning Chef. Or should I say peasant. I need something light to get my day started. No meat!\"', NULL);
 
 -- --------------------------------------------------------
 
@@ -386,7 +326,6 @@ INSERT INTO `prompts` (`id`, `dish_id`, `order_num`, `type`, `text`, `image_id`)
 -- Table structure for table `reactions`
 --
 
-DROP TABLE IF EXISTS `reactions`;
 CREATE TABLE `reactions` (
   `id` int(11) NOT NULL,
   `dish_id` int(11) NOT NULL,
@@ -427,7 +366,6 @@ INSERT INTO `reactions` (`id`, `dish_id`, `text`, `positive`) VALUES
 -- Table structure for table `scores`
 --
 
-DROP TABLE IF EXISTS `scores`;
 CREATE TABLE `scores` (
   `id` int(11) NOT NULL,
   `score` int(11) NOT NULL
@@ -474,7 +412,6 @@ INSERT INTO `scores` (`id`, `score`) VALUES
 -- Table structure for table `steps`
 --
 
-DROP TABLE IF EXISTS `steps`;
 CREATE TABLE `steps` (
   `id` int(11) NOT NULL,
   `dish_id` int(11) NOT NULL,
@@ -543,7 +480,6 @@ INSERT INTO `steps` (`id`, `dish_id`, `execution_order`, `option_id`, `is_correc
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -569,7 +505,6 @@ INSERT INTO `users` (`id`, `username`, `password`, `total_xp`) VALUES
 -- Table structure for table `user_roles`
 --
 
-DROP TABLE IF EXISTS `user_roles`;
 CREATE TABLE `user_roles` (
   `user_id` int(11) NOT NULL,
   `role` varchar(45) NOT NULL
@@ -593,7 +528,6 @@ INSERT INTO `user_roles` (`user_id`, `role`) VALUES
 -- Table structure for table `xp_reward`
 --
 
-DROP TABLE IF EXISTS `xp_reward`;
 CREATE TABLE `xp_reward` (
   `id` int(11) NOT NULL,
   `dish_id` int(11) NOT NULL,
@@ -754,7 +688,7 @@ ALTER TABLE `options`
 -- AUTO_INCREMENT for table `prompts`
 --
 ALTER TABLE `prompts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `reactions`
 --
