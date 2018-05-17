@@ -55,7 +55,6 @@ export class SQLDriver implements DataStore {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       multipleStatements: true,
-      ssl: true,
     };
     this.connect(config);
   }
